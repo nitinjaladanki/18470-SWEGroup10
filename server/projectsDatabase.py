@@ -78,11 +78,15 @@ def checkOutHW(client, projectId, hwSetName, qty, userId):
     hw = hardwareDB.queryHardwareSet(client, hwSetName)
     if not hw:
         return False, 'Hardware set not found'
-    if hw['availability'] < qty:
-        return False, f'Only {hw["availability"]} units available'
+    
 
-    # Decrement global availability
-    hardwareDB.updateAvailability(client, hwSetName, hw['availability'] - qty)
+    print("DEBUG hw:", hw)  # add this line
+    print("DEBUG hw keys:", hw.keys())  # add this line
+
+    if hw['available_capacity'] < qty:
+        return False, f'Only {hw["available_capacity"]} units available'
+
+    hardwareDB.updateAvailability(client, hwSetName, hw['available_capacity'] - qty)
 
     # Increment project's checked-out count
     db = client['haas_db']
@@ -113,7 +117,7 @@ def checkInHW(client, projectId, hwSetName, qty, userId):
         return False, 'Hardware set not found'
 
     # Return to global availability
-    hardwareDB.updateAvailability(client, hwSetName, hw['availability'] + qty)
+    hardwareDB.updateAvailability(client, hwSetName, hw['available_capacity'] + qty)
 
     # Decrement project's checked-out count
     db = client['haas_db']

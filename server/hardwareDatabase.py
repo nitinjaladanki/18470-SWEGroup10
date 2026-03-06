@@ -1,60 +1,50 @@
 # Import necessary libraries and modules
-from xmlrpc import client
+# from xmlrpc import client
 
 from pymongo import MongoClient
 
 '''
-Structure of Hardware Set entry:
+Structure of Hardware Set entry (matches actual DB):
 HardwareSet = {
-    'hwName': hwSetName,
+    'name': hwSetName,
     'capacity': initCapacity,
-    'availability': initCapacity
+    'available': initCapacity
 }
 '''
 
-# Function to create a new hardware set
 def createHardwareSet(client, hwSetName, initCapacity):
     db = client['haas_db']
-    hardware = db['hardware']
-    if hardware.find_one({'hwName': hwSetName}):
-        return False  # already exists
-    hardware.insert_one({
-        'hwName': hwSetName,
+    if db['hardware'].find_one({'name': hwSetName}):
+        return False
+    db['hardware'].insert_one({
+        'name': hwSetName,
         'capacity': initCapacity,
-        'availability': initCapacity
+        'available': initCapacity
     })
     return True
 
-# Function to query a hardware set by its name
 def queryHardwareSet(client, hwSetName):
     db = client['haas_db']
-    result = db['hardware'].find_one({'hwName': hwSetName}, {'_id': 0})
-    return result  # returns dict or None
+    return db['hardware'].find_one({'name': hwSetName}, {'_id': 0})
 
-# Function to update the availability of a hardware set
 def updateAvailability(client, hwSetName, newAvailability):
     db = client['haas_db']
-    hw = db['hardware'].find_one({'hwName': hwSetName})
+    hw = db['hardware'].find_one({'name': hwSetName})
     if not hw:
         return False
-    # Enforce invariant: availability can never exceed capacity or go negative
-    clamped = max(0, min(newAvailability, hw['capacity']))
+    clamped = max(0, min(newAvailability, hw['total_capacity']))
     db['hardware'].update_one(
-        {'hwName': hwSetName},
-        {'$set': {'availability': clamped}}
+        {'name': hwSetName},
+        {'$set': {'available_capacity': clamped}}
     )
     return True
 
-# Function to request space from a hardware set
 def requestSpace(client, hwSetName, amount):
-    """Check if amount is available without committing. Returns True if fulfillable."""
     hw = queryHardwareSet(client, hwSetName)
     if not hw:
         return False
-    return hw['availability'] >= amount
+    return hw['available_capacity'] >= amount
 
-# Function to get all hardware set names
 def getAllHwNames(client):
     db = client['haas_db']
-    return [doc['hwName'] for doc in db['hardware'].find({}, {'hwName': 1, '_id': 0})]
-
+    return [doc['name'] for doc in db['hardware'].find({}, {'name': 1, '_id': 0})]
