@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    gap: 24px;
+    
+}
+
+.button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid black;
+    gap: 24px;
+    display: grid;
+}
+
+.projectcard {
+    color: white;
+    border-radius: 8px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
