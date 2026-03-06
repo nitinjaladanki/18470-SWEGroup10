@@ -1,40 +1,59 @@
-# Import necessary libraries and modules
 from pymongo import MongoClient
-
-import projectsDB
+import bcrypt
+import projectsDatabase as projectsDB
 
 '''
 Structure of User entry:
 User = {
     'username': username,
     'userId': userId,
-    'password': password,
+    'password': hashed_password,
     'projects': [project1_ID, project2_ID, ...]
 }
 '''
 
-# Function to add a new user
 def addUser(client, username, userId, password):
-    # Add a new user to the database
-    pass
+    db = client['haas_db']
+    if db['users'].find_one({'userId': userId}):
+        return False  # userId already taken
+    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    db['users'].insert_one({
+        'username': username,
+        'userId': userId,
+        'password': hashed,
+        'projects': []
+    })
+    return True
 
-# Helper function to query a user by username and userId
 def __queryUser(client, username, userId):
-    # Query and return a user from the database
-    pass
+    db = client['haas_db']
+    return db['users'].find_one({'username': username, 'userId': userId})
 
-# Function to log in a user
 def login(client, username, userId, password):
-    # Authenticate a user and return login status
-    pass
+    user = __queryUser(client, username, userId)
+    if not user:
+        return False, 'User not found'
+    if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        return False, 'Incorrect password'
+    return True, 'Login successful'
 
-# Function to add a user to a project
 def joinProject(client, userId, projectId):
-    # Add a user to a specified project
-    pass
+    db = client['haas_db']
+    project = projectsDB.queryProject(client, projectId)
+    if not project:
+        return False, 'Project not found'
+    # Add to user's project list
+    db['users'].update_one(
+        {'userId': userId},
+        {'$addToSet': {'projects': projectId}}
+    )
+    # Add user to project's member list
+    projectsDB.addUser(client, projectId, userId)
+    return True, 'Joined project successfully'
 
-# Function to get the list of projects for a user
 def getUserProjectsList(client, userId):
-    # Get and return the list of projects a user is part of
-    pass
-
+    db = client['haas_db']
+    user = db['users'].find_one({'userId': userId}, {'_id': 0, 'projects': 1})
+    if not user:
+        return []
+    return user.get('projects', [])

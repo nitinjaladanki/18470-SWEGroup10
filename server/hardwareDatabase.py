@@ -1,37 +1,50 @@
 # Import necessary libraries and modules
+# from xmlrpc import client
+
 from pymongo import MongoClient
 
 '''
-Structure of Hardware Set entry:
+Structure of Hardware Set entry (matches actual DB):
 HardwareSet = {
-    'hwName': hwSetName,
+    'name': hwSetName,
     'capacity': initCapacity,
-    'availability': initCapacity
+    'available': initCapacity
 }
 '''
 
-# Function to create a new hardware set
 def createHardwareSet(client, hwSetName, initCapacity):
-    # Create a new hardware set in the database
-    pass
+    db = client['haas_db']
+    if db['hardware'].find_one({'name': hwSetName}):
+        return False
+    db['hardware'].insert_one({
+        'name': hwSetName,
+        'capacity': initCapacity,
+        'available': initCapacity
+    })
+    return True
 
-# Function to query a hardware set by its name
 def queryHardwareSet(client, hwSetName):
-    # Query and return a hardware set from the database
-    pass
+    db = client['haas_db']
+    return db['hardware'].find_one({'name': hwSetName}, {'_id': 0})
 
-# Function to update the availability of a hardware set
 def updateAvailability(client, hwSetName, newAvailability):
-    # Update the availability of an existing hardware set
-    pass
+    db = client['haas_db']
+    hw = db['hardware'].find_one({'name': hwSetName})
+    if not hw:
+        return False
+    clamped = max(0, min(newAvailability, hw['total_capacity']))
+    db['hardware'].update_one(
+        {'name': hwSetName},
+        {'$set': {'available_capacity': clamped}}
+    )
+    return True
 
-# Function to request space from a hardware set
 def requestSpace(client, hwSetName, amount):
-    # Request a certain amount of hardware and update availability
-    pass
+    hw = queryHardwareSet(client, hwSetName)
+    if not hw:
+        return False
+    return hw['available_capacity'] >= amount
 
-# Function to get all hardware set names
 def getAllHwNames(client):
-    # Get and return a list of all hardware set names
-    pass
-
+    db = client['haas_db']
+    return [doc['name'] for doc in db['hardware'].find({}, {'name': 1, '_id': 0})]
