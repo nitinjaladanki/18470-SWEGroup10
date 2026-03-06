@@ -11,7 +11,6 @@ function App() {
   return (
     <BrowserRouter>
       <nav>
-        <Link to="/forgot-password">Forgot Password</Link> |{' '}
         <Link to="/login">Login</Link> |{' '}
         <Link to="/register">Register</Link> |{' '}
         <Link to="/portal">Portal</Link>
