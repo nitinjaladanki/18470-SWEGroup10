@@ -1,15 +1,55 @@
 import { useState } from "react";
 import styles from "./MyRegistrationPage.module.css";
 
-function MyRegistrationPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const API_BASE = "http://localhost:5000";
 
-  const handleSubmit = (e) => {
+function MyRegistrationPage() {
+  const [username, setusername] = useState("");
+  const [userId, setuserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Registration request for:", { firstName, lastName, email, password });
+    setError("");
+    setSuccess("");
+
+    // handle mistyped password
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE}/add_user`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, userId, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSuccess("Your account was created.");
+        // clear
+        setusername("");
+        setuserId("");
+        setPassword("");
+        setConfirmPassword("");
+      } else {
+        setError(data.message || "Registration failed.");
+      }
+    } catch (error) {
+      setError("Could not create account.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -17,35 +57,46 @@ function MyRegistrationPage() {
       <div className={styles.card}>
         <h2 className={styles.title}>New user? Create an account</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <p className={styles.caption}>First Name</p>
+          <p className={styles.caption}>Username</p>
           <input 
             type="text" 
-            placeholder="First Name" 
+            placeholder="Username" 
             className={styles.input} 
-            required onChange={(e) => setFirstName(e.target.value)} 
+            value={username}
+            required onChange={(e) => setusername(e.target.value)} 
           />
-          <p className={styles.caption}>Last Name</p>
+          <p className={styles.caption}>User ID</p>
           <input 
             type="text" 
-            placeholder="Last Name" 
+            placeholder="User ID" 
             className={styles.input} 
-            required onChange={(e) => setLastName(e.target.value)} 
-          />
-          <p className={styles.caption}>Email Address</p>
-          <input 
-            type="email" 
-            placeholder="Email Address" 
-            className={styles.input} 
-            required onChange={(e) => setEmail(e.target.value)} 
+            value={userId}
+            required onChange={(e) => setuserId(e.target.value)} 
           />
           <p className={styles.caption}>Password</p>
           <input 
             type="password" 
             placeholder="Password" 
-            className={styles.input} 
+            className={styles.input}
+            value={password} 
             required onChange={(e) => setPassword(e.target.value)} 
           />
-          <button type="submit" className={styles.button}>Register</button>
+          <p className={styles.caption}>Confirm Password</p>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className={styles.input}
+            value={confirmPassword}
+            required
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+
+          {error && <p className={styles.error}>{error}</p>}
+          {success && <p className={styles.success}>{success}</p>}
+
+          <button type="submit" className={styles.button} disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
         </form>
       </div>
     </div>
