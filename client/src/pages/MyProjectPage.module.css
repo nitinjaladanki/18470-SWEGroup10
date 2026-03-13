@@ -88,3 +88,13 @@
     flex-direction: column;
   }
 }
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.success {
+  color: green;
+  font-size: 0.875rem;
+}
