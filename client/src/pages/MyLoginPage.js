@@ -14,9 +14,6 @@ function Login() {
     console.log("User submitted login request");
     setSubmitted(true);
   };
-  const handleClick = () => {
-    navigate('/forgot-password');
-  };
 
  return (
     <div className={styles.container}>
@@ -47,9 +44,6 @@ function Login() {
                     <button type="submit" className={styles.button}>
               Enter
             </button>
-            <button onClick={handleClick} className={styles.button}>
-      Forgot Password?
-    </button>
       </div>
     </div>
   );
