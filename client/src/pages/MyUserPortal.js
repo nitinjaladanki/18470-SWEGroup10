@@ -1,5 +1,5 @@
 // Author: Phoebe Franklin 2/23/2026
-
+import { Link } from 'react-router-dom';
 import { useState } from "react";
 import styles from "./MyUserPortal.module.css";
 
@@ -21,18 +21,23 @@ function Portal() {
 <div className={styles.container}>
   <div className={styles.card}>
      <h2>My Project View</h2>
-     <div className={styles.projectcard}style={{ backgroundColor: "#005f86" }} >
-        <h2>My Project 1</h2>
-        
-    </div>
-         <div className={styles.projectcard}style={{ backgroundColor: "#bf5700" }} >
-        <h2>My Project 2</h2>
-        
-    </div>
-         <div className={styles.projectcard}style={{ backgroundColor: "#579d42" }} >
-        <h2>My Project 3</h2>
-        
-    </div>
+    <Link to="/project/1" className={styles.cardLink}>
+        <div className={styles.projectcard} style={{ backgroundColor: "#005f86" }}>
+          <h2>My Project 1</h2>
+        </div>
+      </Link>
+
+      <Link to="/project/2" className={styles.cardLink}>
+        <div className={styles.projectcard} style={{ backgroundColor: "#bf5700" }}>
+          <h2>My Project 2</h2>
+        </div>
+      </Link>
+
+      <Link to="/project/3" className={styles.cardLink}>
+        <div className={styles.projectcard} style={{ backgroundColor: "#579d42" }}>
+          <h2>My Project 3</h2>
+        </div>
+      </Link>
   </div>
       <div className={styles.card}>
         <h2 className={styles.title}>Create New Project</h2>
