@@ -27,17 +27,6 @@ function Portal() {
         </div>
       </Link>
 
-      <Link to="/project/2" className={styles.cardLink}>
-        <div className={styles.projectcard} style={{ backgroundColor: "#bf5700" }}>
-          <h2>My Project 2</h2>
-        </div>
-      </Link>
-
-      <Link to="/project/3" className={styles.cardLink}>
-        <div className={styles.projectcard} style={{ backgroundColor: "#579d42" }}>
-          <h2>My Project 3</h2>
-        </div>
-      </Link>
   </div>
       <div className={styles.card}>
         <h2 className={styles.title}>Create New Project</h2>
@@ -74,6 +63,29 @@ function Portal() {
             />
             <button type="submit" className={styles.button}>
               Create Project
+            </button>
+          </form>
+        )}
+      </div>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Join Project</h2>
+        {submitted ? (
+          <p>
+            Your new project has been created. 
+          </p>
+        ) : (
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <p>Please enter the ID of the project you would like to join:</p>
+            <input
+              type="projectID"
+              required
+              placeholder="Project ID"
+              value={projectID}
+              onChange={(e) => setProjectID(e.target.value)}
+              className={styles.input}
+            />
+            <button type="submit" className={styles.button}>
+              Request to Join
             </button>
           </form>
         )}

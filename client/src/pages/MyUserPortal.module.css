@@ -27,15 +27,13 @@
     background-color: white;
     border-radius: 8px;
     border: 1px solid black;
-    gap: 24px;
-  
-  flex: 1;            /* Each card takes up equal available space */
-  display: grid;
-  flex-direction: column;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 24px;
-  margin: 24px;
+    display: flex;
+    flex: 1;           
+    flex-direction: column;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px;
 }
 
 

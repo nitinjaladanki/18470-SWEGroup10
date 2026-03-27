@@ -3,11 +3,10 @@ import styles from './MyProjectPage.module.css';
 
 const ResourceCard = ({ title, capacity, available }) => {
   const [requestValue, setRequestValue] = useState('');
-  const [status, setStatus] = useState(null); // 'Accepted' or 'Denied'
+  const [status, setStatus] = useState(null); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Example logic matching your screenshot
     if (requestValue > 0 && requestValue <= available) {
       setStatus('Accepted');
     } else {
@@ -30,7 +29,19 @@ const ResourceCard = ({ title, capacity, available }) => {
       </div>
 
       <form onSubmit={handleSubmit} className={styles.inputGroup}>
-        <label className={styles.label}>Request?</label>
+        <label className={styles.label}>Check-in</label>
+        <div className={styles.requestRow}>
+          <input 
+            type="number" 
+            value={requestValue} 
+            onChange={(e) => setRequestValue(e.target.value)} 
+            className={styles.smallInput}
+          />
+          <button type="submit" className={styles.submitBtn}>Submit</button>
+        </div>
+      </form>
+           <form onSubmit={handleSubmit} className={styles.inputGroup}>
+        <label className={styles.label}>Check-out</label>
         <div className={styles.requestRow}>
           <input 
             type="number" 
@@ -59,8 +70,8 @@ const ResourceView = () => {
       </header>
       
       <main className={styles.container}>
-        <ResourceCard title="HW Set1" capacity={100} available={50} />
-        <ResourceCard title="HW Set2" capacity={100} available={30} />
+        <ResourceCard title="HW Set1" />
+        <ResourceCard title="HW Set2" />
       </main>
     </div>
   );
