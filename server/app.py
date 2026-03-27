@@ -17,7 +17,7 @@ MONGODB_SERVER = os.getenv("MONGO_URI")
 
 # Initialize a new Flask web application
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000"])
 
 def get_client():
     return MongoClient(MONGODB_SERVER)

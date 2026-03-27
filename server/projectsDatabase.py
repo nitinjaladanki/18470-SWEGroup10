@@ -79,9 +79,8 @@ def checkOutHW(client, projectId, hwSetName, qty, userId):
     if not hw:
         return False, 'Hardware set not found'
     
-
-    print("DEBUG hw:", hw)  # add this line
-    print("DEBUG hw keys:", hw.keys())  # add this line
+    # print("DEBUG hw:", hw)  # add this line
+    # print("DEBUG hw keys:", hw.keys())  # add this line
 
     if hw['available_capacity'] < qty:
         return False, f'Only {hw["available_capacity"]} units available'

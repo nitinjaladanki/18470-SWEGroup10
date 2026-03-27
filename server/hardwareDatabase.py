@@ -7,8 +7,8 @@ from pymongo import MongoClient
 Structure of Hardware Set entry (matches actual DB):
 HardwareSet = {
     'name': hwSetName,
-    'capacity': initCapacity,
-    'available': initCapacity
+    'capatotal_capacitycity': initCapacity,
+    'available_capacity': initCapacity
 }
 '''
 
@@ -18,8 +18,8 @@ def createHardwareSet(client, hwSetName, initCapacity):
         return False
     db['hardware'].insert_one({
         'name': hwSetName,
-        'capacity': initCapacity,
-        'available': initCapacity
+        'total_capacity': initCapacity,
+        'available_capacity': initCapacity
     })
     return True
 
