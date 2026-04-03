@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import bcrypt
 import projectsDatabase as projectsDB
+import uuid
 
 '''
 Structure of User entry:
@@ -12,30 +13,30 @@ User = {
 }
 '''
 
-def addUser(client, username, userId, password):
+def addUser(client, username, password):
     db = client['haas_db']
-    if db['users'].find_one({'userId': userId}):
-        return False  # userId already taken
+    if db['users'].find_one({'username': username}):
+        return False  # username already taken
     hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     db['users'].insert_one({
         'username': username,
-        'userId': userId,
+        'userId': str(uuid.uuid4()),  # auto-generated
         'password': hashed,
         'projects': []
     })
     return True
 
-def __queryUser(client, username, userId):
+def __queryUser(client, username):
     db = client['haas_db']
-    return db['users'].find_one({'username': username, 'userId': userId})
+    return db['users'].find_one({'username': username})
 
-def login(client, username, userId, password):
-    user = __queryUser(client, username, userId)
+def login(client, username, password):
+    user = __queryUser(client, username)
     if not user:
-        return False, 'User not found'
+        return False, 'User not found', 0
     if not bcrypt.checkpw(password.encode('utf-8'), user['password']):
-        return False, 'Incorrect password'
-    return True, 'Login successful'
+        return False, 'Incorrect password', 0
+    return True, 'Login successful', user['userId']
 
 def joinProject(client, userId, projectId):
     db = client['haas_db']

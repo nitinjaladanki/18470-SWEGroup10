@@ -1,6 +1,6 @@
 # Import necessary libraries and modules
 #from bson.objectid import ObjectId
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from pymongo import MongoClient
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -18,7 +18,7 @@ load_dotenv()  # must be called before os.getenv()
 MONGODB_SERVER = os.getenv("MONGO_URI")
 
 # Initialize a new Flask web application
-app = Flask(__name__)
+app = Flask(__name__, static_folder='build')
 CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000"])
 
 def get_client():
@@ -29,9 +29,9 @@ def get_client():
 def login():
     data = request.json
     client = get_client()
-    success, msg = usersDB.login(client, data['username'], data['userId'], data['password'])
+    success, msg, userId = usersDB.login(client, data['username'], data['password'])
     client.close()
-    return jsonify({'success': success, 'message': msg}), (200 if success else 401)
+    return jsonify({'success': success, 'message': msg, 'userId': userId}), (200 if success else 401)
 
 # Route for the main page (Work in progress)
 @app.route('/main')
@@ -57,9 +57,9 @@ def join_project():
 def add_user():
     data = request.json
     client = get_client()
-    success = usersDB.addUser(client, data['username'], data['userId'], data['password'])
+    success = usersDB.addUser(client, data['username'], data['password'])
     client.close()
-    return jsonify({'success': success, 'message': 'User created' if success else 'User ID already exists'}), (201 if success else 409)
+    return jsonify({'success': success, 'message': 'User created' if success else 'Username already exists'}), (201 if success else 409)
 
 # Route for getting the list of user projects
 @app.route('/get_user_projects_list', methods=['POST'])
@@ -151,3 +151,10 @@ def check_inventory():
 # Main entry point for the application
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, 'index.html')

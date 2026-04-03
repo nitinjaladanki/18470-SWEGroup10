@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import styles from "./MyUserPortal.module.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "";
 
 const PROJECT_COLORS = ["#005f86", "#bf5700", "#579d42", "#7b2d8b", "#c0392b", "#16a085"];
 

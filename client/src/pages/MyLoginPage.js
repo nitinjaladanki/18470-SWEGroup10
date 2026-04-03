@@ -3,19 +3,18 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import styles from "./MyLoginPage.module.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "";
 
 function Login() {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [userId, setUserId] = useState("");
-    const [password, setPassWord] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const handleRegisterClick = () => {
-  navigate('/register'); 
-    };
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassWord] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleRegisterClick = () => {
+    navigate('/register'); 
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,14 +27,14 @@ function Login() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, userId, password }),
+          body: JSON.stringify({ username, password }),
         }
       );
 
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem("userId", userId);
+        localStorage.setItem("userId", data.userId);
         localStorage.setItem("username", username);
         navigate('/portal');
       } else {
@@ -64,14 +63,6 @@ function Login() {
               className={styles.input}
             />
             <input
-              type="text"
-              required
-              placeholder="User ID"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              className={styles.input}
-            />
-            <input
               type="password"
               required
               placeholder="Password"
@@ -86,7 +77,7 @@ function Login() {
               {loading ? "Logging in..." : "Enter"}
             </button>
             <button type="button" className={styles.button} onClick={handleRegisterClick}>
-              {loading ? "Logging in..." : "Create New Account"}
+              Create New Account
             </button>
             </div>
           </form>

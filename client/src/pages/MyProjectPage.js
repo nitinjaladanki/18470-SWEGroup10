@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './MyProjectPage.module.css';
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "";
 
 const ResourceCard = ({ hwSetName, projectId, userId, onUpdate }) => {
   const [hwInfo, setHwInfo] = useState({ total_capacity: 0, available_capacity: 0 });

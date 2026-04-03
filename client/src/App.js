@@ -4,7 +4,6 @@ import MyLoginPage from './pages/MyLoginPage.js';
 import MyRegistrationPage from './pages/MyRegistrationPage.js';
 import MyUserPortal from './pages/MyUserPortal.js';
 import MyProjectPage from './pages/MyProjectPage.js';
-import styles from './App.css';
 
 function App() {
   return (
