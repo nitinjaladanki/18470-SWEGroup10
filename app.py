@@ -6,8 +6,6 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
-from streamlit import success
-
 # Import custom modules for database interactions
 import usersDatabase as usersDB
 import projectsDatabase as projectsDB
