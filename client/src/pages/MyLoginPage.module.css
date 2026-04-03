@@ -1,23 +1,29 @@
-.container {
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #ffffff;
-    gap: 30px;
-    display: flex;
-    flex-direction: column; 
-    gap: 12px;
+
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 15px;
 }
 
-.button {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    margin-right: 100px;
-    gap: 20px;
+.buttonContainer .button {
+  display: block;
+  width: 100%;
+  margin-bottom: 0; 
+  padding: 12px;
+  cursor: pointer;
 }
+
+
+.buttonContainer .button + .button {
+  margin-top: 20px;
+}
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+
 
 .input {
     padding: 10px;
@@ -26,14 +32,36 @@
     gap: 20px;
 }
 
+
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
 .card {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     border: 1px solid black;
-    width: 320px;
-    gap: 20px;
-    flex-direction: row;
 }
 
 .title {
@@ -45,6 +73,12 @@
 .form {
   display: flex;
   flex-direction: column;
+}
+
+.caption {
+    font-size: 14px;
+    color: black;
+    margin-top: 2px;
 }
 
 .error {

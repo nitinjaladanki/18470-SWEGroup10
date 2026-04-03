@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import styles from "./ForgotMyPassword.module.css";
+import styles from "./MyLoginPage.module.css";
 
 const API_BASE = "http://localhost:5000";
 
@@ -13,11 +13,15 @@ function Login() {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const handleRegisterClick = () => {
+  navigate('/register'); 
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     
     try {
       const response = await fetch(`${API_BASE}/login`, 
@@ -77,10 +81,14 @@ function Login() {
             />
 
             {error && <p className={styles.error}>{error}</p>}
-
+        <div className={styles.buttonContainer}>
             <button type="submit" className={styles.button} disabled={loading}>
               {loading ? "Logging in..." : "Enter"}
             </button>
+            <button type="button" className={styles.button} onClick={handleRegisterClick}>
+              {loading ? "Logging in..." : "Create New Account"}
+            </button>
+            </div>
           </form>
         )}
       </div>
