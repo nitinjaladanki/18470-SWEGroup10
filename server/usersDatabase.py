@@ -42,6 +42,10 @@ def joinProject(client, userId, projectId):
     project = projectsDB.queryProject(client, projectId)
     if not project:
         return False, 'Project not found'
+    # Check if user is already in project
+    success, msg = projectsDB.addUser(client, projectId, userId)
+    if not success:
+        return False, msg
     # Add to user's project list
     db['users'].update_one(
         {'userId': userId},

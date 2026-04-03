@@ -42,13 +42,16 @@ def createProject(client, projectName, projectId, description):
 # Function to add a user to a project
 def addUser(client, projectId, userId):
     db = client['haas_db']
-    if not db['projects'].find_one({'projectId': projectId}):
-        return False
+    project = db['projects'].find_one({'projectId': projectId})
+    if not project:
+        return False, 'Project not found'
+    if userId in project.get('users', []):
+        return False, 'You have already joined this project'
     db['projects'].update_one(
         {'projectId': projectId},
         {'$addToSet': {'users': userId}}
     )
-    return True
+    return True, 'Joined project successfully'
     
 
 # Function to update hardware usage in a project

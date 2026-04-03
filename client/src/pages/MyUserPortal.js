@@ -159,15 +159,10 @@ function Portal() {
               className={styles.projectcard}
               style={{ backgroundColor: PROJECT_COLORS[i % PROJECT_COLORS.length] }}
             >
-              <h2>{project.projectName}</h2>
-              <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.85 }}>
+              <h2 style={{ margin: 0 }}>{project.projectName}</h2>
+              <p style={{ margin: '4px 0 0', fontSize: '0.9rem', opacity: 0.85 }}>
                 ID: {project.projectId}
               </p>
-              {project.description && (
-                <p style={{ margin: '4px 0 0', fontSize: '0.85rem', opacity: 0.75 }}>
-                  {project.description}
-                </p>
-              )}
             </div>
           </Link>
         ))}

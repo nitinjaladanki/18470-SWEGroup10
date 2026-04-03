@@ -5,8 +5,7 @@ import styles from './MyProjectPage.module.css';
 const API_BASE = "http://localhost:5000";
 
 const ResourceCard = ({ hwSetName, projectId, userId, onUpdate }) => {
-  // Default to 100/100 
-  const [hwInfo, setHwInfo] = useState({ capacity: 100, available: 100 });
+  const [hwInfo, setHwInfo] = useState({ total_capacity: 0, available_capacity: 0 });
   const [checkedOut, setCheckedOut] = useState(0);
   const [requestValue, setRequestValue] = useState('');
   const [returnValue, setReturnValue] = useState('');
@@ -114,12 +113,12 @@ const ResourceCard = ({ hwSetName, projectId, userId, onUpdate }) => {
 
       <div className={styles.inputGroup}>
         <label className={styles.label}>Capacity</label>
-        <div className={styles.displayBox}>{hwInfo.capacity}</div>
+        <div className={styles.displayBox}>{hwInfo.total_capacity}</div>
       </div>
 
       <div className={styles.inputGroup}>
         <label className={styles.label}>Available</label>
-        <div className={styles.displayBox}>{hwInfo.available}</div>
+        <div className={styles.displayBox}>{hwInfo.available_capacity}</div>
       </div>
 
       <div className={styles.inputGroup}>
@@ -231,8 +230,11 @@ const ResourceView = () => {
         <h1 className={styles.headerTitle}>
           {project.projectName} — Resource View
         </h1>
-        <p style={{ margin: '4px 0 0', opacity: 0.8, fontSize: '0.9rem' }}>
-          {project.description} &nbsp;|&nbsp; ID: {project.projectId}
+        <p style={{ margin: '4px 0 0', opacity: 0.8, fontSize: '0.9rem', color: '#e1e1e1' }}>
+          ID: {project.projectId}
+        </p>
+        <p style={{ margin: '4px 0 0', opacity: 0.8, fontSize: '0.9rem', color: '#e1e1e1' }}>
+          {project.description}
         </p>
         <button
           onClick={() => navigate('/portal')}
@@ -252,7 +254,7 @@ const ResourceView = () => {
 
       <main className={styles.container}>
         {hwNames.length === 0 && (
-          <p>No hardware sets available. An admin must create them first.</p>
+          <p>No hardware sets available.</p>
         )}
         {hwNames.map((name) => (
           <ResourceCard

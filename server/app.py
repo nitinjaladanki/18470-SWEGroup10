@@ -6,6 +6,8 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
+from streamlit import success
+
 # Import custom modules for database interactions
 import usersDatabase as usersDB
 import projectsDatabase as projectsDB
@@ -47,6 +49,7 @@ def join_project():
     client = get_client()
     success, msg = usersDB.joinProject(client, data['userId'], data['projectId'])
     client.close()
+    
     return jsonify({'success': success, 'message': msg}), (200 if success else 404)
 
 # Route for adding a new user
