@@ -134,7 +134,7 @@ function Portal() {
     <div className={styles.container}>
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '1rem' }}>
+      <div className={styles.header}>
         <h2>Welcome, {username}</h2>
         <button onClick={handleLogout} className={styles.button} style={{ width: 'auto', padding: '0.4rem 1rem' }}>
           Logout
@@ -142,7 +142,7 @@ function Portal() {
       </div>
 
       {/* My Projects */}
-      <div className={styles.card}>
+      <div className={styles.cardproject}>
         <h2>My Projects</h2>
         {projectsLoading && <p>Loading projects...</p>}
         {projectsError && <p style={{ color: 'red' }}>{projectsError}</p>}
@@ -168,63 +168,64 @@ function Portal() {
         ))}
       </div>
 
-      {/* Create New Project */}
-      <div className={styles.card}>
-        <h2 className={styles.title}>Create New Project</h2>
-        <form onSubmit={handleCreateProject} className={styles.form}>
-          <input
-            type="text"
-            required
-            placeholder="Project Name"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="text"
-            required
-            placeholder="Project ID"
-            value={projectId}
-            onChange={(e) => setProjectId(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="text"
-            required
-            placeholder="Project Description"
-            value={projectDesc}
-            onChange={(e) => setProjectDesc(e.target.value)}
-            className={styles.input}
-          />
-          {createError && <p style={{ color: 'red' }}>{createError}</p>}
-          {createSuccess && <p style={{ color: 'green' }}>{createSuccess}</p>}
-          <button type="submit" className={styles.button} disabled={createLoading}>
-            {createLoading ? "Creating..." : "Create Project"}
-          </button>
-        </form>
-      </div>
+      <div>
+        {/* Create New Project */}
+        <div className={styles.card}>
+          <h2 className={styles.title}>Create New Project</h2>
+          <form onSubmit={handleCreateProject} className={styles.form}>
+            <input
+              type="text"
+              required
+              placeholder="Project Name"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              className={styles.input}
+            />
+            <input
+              type="text"
+              required
+              placeholder="Project ID"
+              value={projectId}
+              onChange={(e) => setProjectId(e.target.value)}
+              className={styles.input}
+            />
+            <input
+              type="text"
+              required
+              placeholder="Project Description"
+              value={projectDesc}
+              onChange={(e) => setProjectDesc(e.target.value)}
+              className={styles.input}
+            />
+            {createError && <p style={{ color: 'red' }}>{createError}</p>}
+            {createSuccess && <p style={{ color: 'green' }}>{createSuccess}</p>}
+            <button type="submit" className={styles.button} disabled={createLoading}>
+              {createLoading ? "Creating..." : "Create Project"}
+            </button>
+          </form>
+        </div>
 
-      {/* Join Existing Project */}
-      <div className={styles.card}>
-        <h2 className={styles.title}>Join Existing Project</h2>
-        <form onSubmit={handleJoinProject} className={styles.form}>
-          <p>Please enter the ID of the project you would like to join:</p>
-          <input
-            type="text"
-            required
-            placeholder="Project ID"
-            value={joinProjectId}
-            onChange={(e) => setJoinProjectId(e.target.value)}
-            className={styles.input}
-          />
-          {joinError && <p style={{ color: 'red' }}>{joinError}</p>}
-          {joinSuccess && <p style={{ color: 'green' }}>{joinSuccess}</p>}
-          <button type="submit" className={styles.button} disabled={joinLoading}>
-            {joinLoading ? "Joining..." : "Join Project"}
-          </button>
-        </form>
+        {/* Join Existing Project */}
+        <div className={styles.card}>
+          <h2 className={styles.title}>Join Existing Project</h2>
+          <form onSubmit={handleJoinProject} className={styles.form}>
+            <p>Please enter the ID of the project you would like to join:</p>
+            <input
+              type="text"
+              required
+              placeholder="Project ID"
+              value={joinProjectId}
+              onChange={(e) => setJoinProjectId(e.target.value)}
+              className={styles.input}
+            />
+            {joinError && <p style={{ color: 'red' }}>{joinError}</p>}
+            {joinSuccess && <p style={{ color: 'green' }}>{joinSuccess}</p>}
+            <button type="submit" className={styles.button} disabled={joinLoading}>
+              {joinLoading ? "Joining..." : "Join Project"}
+            </button>
+          </form>
+        </div>
       </div>
-
     </div>
   );
 }
