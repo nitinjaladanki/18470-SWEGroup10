@@ -1,0 +1,101 @@
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #374146; /* Dark charcoal from your screenshot */
+  padding: 15px 30px;
+}
+
+.headerTitle {
+  color: white;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.container {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+  flex: 1; /* Fills remaining height */
+  flex-direction: column;
+}
+
+.resourceCard {
+  flex: 1; /* This makes both HW sets fill the screen width equally */
+  min-width: 300px;
+}
+
+.cardTitle {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.label {
+  width: 100px;
+  font-size: 1.1rem;
+}
+
+.displayBox, .smallInput {
+  border: 1px solid #000;
+  height: 30px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.displayBox {
+  flex: 1; /* Stretches the capacity and available boxes */
+}
+
+.requestRow {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+}
+
+.smallInput {
+  width: 150px; /* Fixed width for the request input */
+}
+
+.submitBtn {
+  background-color: #374146;
+  color: white;
+  border: none;
+  padding: 0 25px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.statusText {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.accepted { color: #558b2f; }
+.denied { color: #c6692d; }
+
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.success {
+  color: green;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #ffffff;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid black;
+    display: flex;
+    flex: 1;           
+    flex-direction: column;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 24px;
+}
+
+
+.projectcard {
+    color: white;
+    border-radius: 8px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 18px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    color: black;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardLink {
+  text-decoration: none; /* Removes the underline */
+  color: inherit;        /* Keeps the text white/standard */
+  display: block;        /* Ensures the whole card area is clickable */
+  margin-bottom: 15px;   /* Maintains spacing between cards */
+}
+
+.cardLink:hover {
+  opacity: 0.9;          /* Optional: slight visual feedback on hover */
+  transform: translateY(-2px); /* Optional: subtle lift effect */
+  transition: all 0.2s ease;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.success {
+  color: green;
+  font-size: 0.875rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 1rem 0rem 1rem;
+}
+
+.cardproject {
+    display: flex;
+    flex: 1;           
+    flex-direction: column;
+    border-radius: 8px;
+    padding: 0px 30px 0px 30px;
+    margin: 24px;
+}
